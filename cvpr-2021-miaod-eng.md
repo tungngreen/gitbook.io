@@ -55,10 +55,10 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
 1. A way to measure Epistemic Uncertainty?
    * Dropout at test time
      * Usually, we would only use dropout for the train phase, but here we can use it as a form of stochastic sampling.
+     * For each dropout case, we would likely have a different output.
     
 ![Figure 4: Dropout Sampling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
 
-     * For each dropout case, we would likely have a different output.
    * Model Emsemble
      * In this case, we use model independently trained for sampling.
     
