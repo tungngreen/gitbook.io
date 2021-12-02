@@ -40,31 +40,35 @@ and a much larger set of unlabeled image data, denoted ![][x-0-u]. Each set ![][
 In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], and then retrained on the unlabeled set. The goal here is to reap the benefits of the unlabeled set, without having to label its data manually. So through this Active Learning frame work, the model would be able to select ![][k] new images from the unlabeled set and give them some generated labels, so we can incorperate them into ![][x-0-l] to form the new labeled set.
 
 ## **2. Motivation**
+
 ### **Uncertainty**
+
+![Figure 3: A cat-dog classifier [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/catdog.png)
 
 1. Two kinds of uncertainty
     
     * Before going further, it is imperative that we clear out another concept. Earlier, we talked about how the images, or bag of instances, that are informative are actually the ones that the model is uncertain about. But how exactly do we do that? It cannot be simply done by measuring the output probabilities of, say, the logistic function, because those probilities will always sum to 1.
-
-![Figure 3: A cat-dog classifier [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/catdog.png)
 
    * For example, if we input a picture of a cat and a dog [\[mitlecture\]][mitlecture] into a model that has been trained with cat and dog pictures, we will probably get 0.51 and 0.49, as the output possibilities. Using that result, the model will still decide and be confident about its decision. But is that correct if we categorize this image into either cat or dog?
   
    * To make it even simpler, let's consider a midterm exam consisting of 10 questions, each of which has 4 choices (A, B, C, and D). If you decide to choose only A, you may not choose the right answers for some questions, but at the end of the test you always get 25% of the points. This is refered to as ***Aleatoric Uncertainty*** or the ***uncertainty of data*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty]. 
 
    * However, as you study for the exam, you want to measure your knowledge gap to be filled. One way is to count how many right answers after you have finished 10 questions. Another way, more difficult but also more effective, is to measure how much you are uncertain about each question. This is refered to as ***Epistemic Uncertainty*** or the ***uncertainty of prediction*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty], which is also what we would want to measure so that our model can get better from the questions it is uncertain about.
-  
+
+
+
 2. A way to measure Epistemic Uncertainty?
+
+    ![Figure 4: Dropout Sampling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
+   
    * Dropout at test time
      * Usually, we would only use dropout for the train phase, but here we can use it as a form of stochastic sampling.
      * For each dropout case, we would likely have a different output.
-    
-![Figure 4: Dropout Sampling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
 
    * Model Emsemble
      * In this case, we use model independently trained for sampling.
     
-![Figure 5: Model Ensembling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
+    ![Figure 5: Model Ensembling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
 
    * At the end, by looking at many sample outputs for the same input, we can calculate the expectation and variance of the model's prediction. The larger the variance is, the more uncertain the model is.
     
@@ -242,15 +246,15 @@ There are some interesting things we can point out in the ablation study. I thin
 ### **Model Analysis**
 1. Visual Analysis
 
-![Figure 13: Visual Analysis of MI-AOD's performance at different stages [source: MI-AOD's Figure 6]](.gitbook/assets/11/visual-analysis.png)
+    ![Figure 13: Visual Analysis of MI-AOD's performance at different stages [source: MI-AOD's Figure 6]](.gitbook/assets/11/visual-analysis.png)
 
-Figure 13 shows the heat map of model's output after each stage. It is calculated by summarizing the uncertainty score of all instances. The high uncertainty score should be focused around the objects of interest, because the closer all the uncertain instances are to the objects, the more useful features we could learn. We can see that by applying different stages, the uncertain region slowly closed down on the objects.
+    Figure 13 shows the heat map of model's output after each stage. It is calculated by summarizing the uncertainty score of all instances. The high uncertainty score should be focused around the objects of interest, because the closer all the uncertain instances are to the objects, the more useful features we could learn. We can see that by applying different stages, the uncertain region slowly closed down on the objects.
 
-1. Statistical Analysis
+2. Statistical Analysis
 
-![Figure 14: Statistical Analysis of MI-AOD's performance compared to other methods [source: MI-AOD's Figure 7]](.gitbook/assets/11/stat-analysis.png)
+    ![Figure 14: Statistical Analysis of MI-AOD's performance compared to other methods [source: MI-AOD's Figure 7]](.gitbook/assets/11/stat-analysis.png)
 
-Figure 14 shows the number of true positive instances hit by each methods.
+    Figure 14 shows the number of true positive instances hit by each methods.
 
 ## 5. Conclusion
 

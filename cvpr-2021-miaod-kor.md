@@ -224,13 +224,17 @@ Ablation Study 결과를에 제미있는 점 몇 개가 있습니다. 저는 Abl
 
 ### **모델 분석**
 
-![그림 13: MI-AOD의 각 단계의 결과의 비주얼 분석 [소스: MI-AOD의 그림 6]](.gitbook/assets/11/visual-analysis.png)
+1. 비주얼 분석
 
-이 그림은 각 단계의 모델 output heatmap를 보여줍니다. 각 Heatmap는 합계된 이미지의 모든 Instance의 Uncertainty 점수입니다. Object of Interest의 주위에 유용한 feature가 많아서 Object에 가까울수록 점수가 더 높습니다.
+    ![그림 13: MI-AOD의 각 단계의 결과의 비주얼 분석 [소스: MI-AOD의 그림 6]](.gitbook/assets/11/visual-analysis.png)
 
-![그림 14: MI-AOD와 다른 방법의 결과의 통계학적 분석 [소스: MI-AOD의 그림 7]](.gitbook/assets/11/stat-analysis.png)
+    이 그림은 각 단계의 모델 output heatmap를 보여줍니다. 각 Heatmap는 합계된 이미지의 모든 Instance의 Uncertainty 점수입니다. Object of Interest의 주위에 유용한 feature가 많아서 Object에 가까울수록 점수가 더 높습니다.
 
-그림 14는 각 방법의 정확한 Instance의 수를 보여줍니다.
+2. 통계적 분석
+
+    ![그림 14: MI-AOD와 다른 방법의 결과의 통계학적 분석 [소스: MI-AOD의 그림 7]](.gitbook/assets/11/stat-analysis.png)
+
+    그림 14는 각 방법의 정확한 Instance의 수를 보여줍니다.
 
 ## **5. 결론**
 
