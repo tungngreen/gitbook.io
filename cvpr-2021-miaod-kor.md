@@ -49,7 +49,7 @@ RetinaNet [\[lin2017\]][lin2017] 작동 과정에서 첫 번째 머쥴은 이미
   
    * 하지만 종은 학생들은 25점을 받는 것이 안 돼서 더 열심히 공부하고 싶겠죠. 그래서 각 문제마다 조심히 살펴보고 문제에 대해 얼마나 아는지 모르는지 알게 됩니다. 이 것은 **Epistemic Uncertainty*** 또 ***uncertainty of prediction***이라고 합니다 [\[ulkumen-uncertainty\]][ulkumen-uncertainty].
 
-2.  Epistemic Uncertainty를 측정하는 법
+2. Epistemic Uncertainty를 측정하는 법
 
 ![그림 4: Uncertainty 측정을 위한 Dropout  [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
 
@@ -227,7 +227,7 @@ Ablation Study 결과를에 제미있는 점 몇 개가 있습니다. 저는 Abl
 
 이 그림은 각 단계의 모델 output heatmap를 보여줍니다. 각 Heatmap는 합계된 이미지의 모든 Instance의 Uncertainty 점수입니다. Object of Interest의 주위에 유용한 feature가 많아서 Object에 가까울수록 점수가 더 높습니다.
 
-1. 통계학적 분석
+2. 통계학적 분석
 
 ![그림 14: MI-AOD와 다른 방법의 결과의 통계학적 분석 [소스: MI-AOD의 그림 7]](.gitbook/assets/11/stat-analysis.png)
 
