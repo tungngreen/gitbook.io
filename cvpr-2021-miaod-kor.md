@@ -21,7 +21,7 @@ Object Detection에서 input는 보통 이미지나 동영상 프레임이며 �
 
 RetinaNet [\[lin2017\]][lin2017] 작동 과정에서 첫 번째 머쥴은 이미지 속에 물체가 있는 가능성이 높은 수많은 구역들을 추천하고 이 구역들은 anchor boxes이나 (이 논문에서는) instance라고 합니다. background만 포함하는 instance는 ***negative instance***라고 반면에 실제로 물제가 있는 instance는 positive instance라고 저의됩니다. 또한 이미지는 속에 많은 instance가 생길 수도 있기 때문에 instance bag이라고요.
 
-![그림 2: Instance bags의 예시 [소스: MI-AOD's 그림 2]](.gitbook/assets/11/instance-bag.png)
+![그림 2: Instance bags의 예시 [소스: MI-AOD의 그림 2]](.gitbook/assets/11/instance-bag.png)
 
 사진을 보시면 많은 instances 중에 빨간섹인 플러스과 마이너스 기호가 몇 개가 있죠. 그 것들이 학습 과정에 유익한 instance이기 때문에 이 논문의 최고의 목적은 그 것들을 찾는 겁니다.
 
@@ -55,14 +55,13 @@ RetinaNet [\[lin2017\]][lin2017] 작동 과정에서 첫 번째 머쥴은 이미
 
       * 보통 Dropout라는 기법은 regularization을 위해서 훈련 때만 쓰이지만 test 때 stochastic sampling 목적으로 쓰여도 됩니다.
 
-![그림 4: Uncertainty 측정을 위한 Dropout  [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
+    ![그림 4: Uncertainty 측정을 위한 Dropout  [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
 
-    
     * Model Ensemble
     
        * 독같은 모델와 독같은 데이터이라도 훈련 후 나오는 결과들의 사이에 차이가 생길 수도 있습니다. 따라서 독립하게 훈련 된 모델들을 모아서 같은 test sample에 쓰는 것은 결과의 배포을 측정하기 위한 sampling으로 보일  수 있습니다.
 
-![그림 5: Uncertainty 측정을 위한 Model Ensembling [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
+    ![그림 5: Uncertainty 측정을 위한 Model Ensembling [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
 
     * 마지막에 수많은 수집된 sample 결과들로 모델 output의 기대값 (Expected Value)와 분산값 (Variance)을 계산할 수 있습니다. Variance 값이 클수록 Uncertainty 도가 더 큽니다.
 
@@ -85,13 +84,13 @@ RetinaNet [\[lin2017\]][lin2017] 작동 과정에서 첫 번째 머쥴은 이미
 
 이 논문에서 Object Detection을 위한 Multiple Instance Active Learning 기법 (MI-AOD)가 제안됐습니다. 위에 말씀드렸던 대로 최고의 목표는 가장 유익한 레이블링되지 않은 이미지를 선택하고 레이블링된 세트에 추가하는 겁니다. 또한 uncertainty도를 측정하기 위해 dropout나 model ensemble를 써야 하죠. 하지만 그런 방법을 사용하면 시간을 많이 걸리고 자원이 너무 많이 필요합니다. 따라서 본 논문에서 저자들은 Instance Uncertainty Learning (IUL)을 위해 classifier head 두 가지가 있는 모델을 head들의 예측 불일치을 최대화 하도록 훈련을 합니다. 
 
-![그림 8: Multiple Instance Uncertainty Learning [소스: MI-AOD's 그림 2]](.gitbook/assets/11/iul.png)
+![그림 8: Multiple Instance Uncertainty Learning [소스: MI-AOD의 그림 2]](.gitbook/assets/11/iul.png)
 
 최대화 후 다시 최적화라니? 사진을 보신 후 좀 당황스럽죠. 저도 그랬습니다. 실은 이 둘은 차이가 좀 있습니다. 첫 번째의 것은 아까 전에 말씀드렸습니다. Classifier head들 (![][f1]과 ![][f2])의 예측 불일치 최대화를 한다는 거죠. 그 다음에 레이블링된 세트과 레이블링되지 않은 세트의 bias 차이를 최적화해야 합니다.
 
 그럼 이제 모델은 유익한 이미지를 선택할 수 있는건가요? 아니오. 훈련은 아직 좀 더 해야 합니다.
 
-![그림 9: Multiple Instance Uncertainty Reweighting [소스: MI-AOD's 그림 2]](.gitbook/assets/11/iur.png)
+![그림 9: Multiple Instance Uncertainty Reweighting [소스: MI-AOD의 그림 2]](.gitbook/assets/11/iur.png)
 
 예를 들어 우리가 강아지를 더 잘 인식하기 위해 훈련하고 있고, 두 개의 사진이 있다고 상상해 보세요. 하나는 강아지로 가득하고 다른 하나는 다른 많은 대표적인 물건들 중 오직 한 개의 강아지만 가지고 있으면, 두 중에 어떤 것이 더 좋을까요? 두 사진에 모두 강아지가 있기 때문에 '강아지'라는 레이블이 붙을 수 있지만 당연히 강아지들로 가득 찬 것이은우리 모델에 더 유용할 것이라는 것은 명백합니다. 여기서 Instance Uncertainty과 Image Uncertainty을 구별해야 합니다. 따라서 MI-AOD는 Multiple Instance Learning (MIL) 모듈을 사용하여 Instance Uncertainty Learning (IUL)를 수행하여 이미지 간에 외관 일관성을 강제합니다. 그래야 레이블링되지 않은 데이터 세트에서 유용한 사진를 찾을 수 있습니다.
 
@@ -103,7 +102,7 @@ IUL과 IUR의 학습 절차는 거의 동일합니다. 유일한 차이점은 IU
 
 ### ***Instace Uncertainty Learning (IUL)***
 
-![그림 10: IUL 훈련 process [소스: MI-AOD's 그림 3]](.gitbook/assets/11/iul-training.png)
+![그림 10: IUL 훈련 process [소스: MI-AOD의 그림 3]](.gitbook/assets/11/iul-training.png)
 
 1. 레이블링된 세트로 훈련
 
@@ -137,7 +136,7 @@ IUL과 IUR의 학습 절차는 거의 동일합니다. 유일한 차이점은 IU
 
 ### **Instance Uncertainty Re-weighting (IUR)**
 
-![그림 11: IUR 훈련 절차 [소스: MI-AOD's 그림 4]](.gitbook/assets/11/iur-training.png)
+![그림 11: IUR 훈련 절차 [소스: MI-AOD의 그림 4]](.gitbook/assets/11/iur-training.png)
 
 1. Multiple Instance Learning (MIL)
 
@@ -192,7 +191,7 @@ IUL과 IUR의 학습 절차는 거의 동일합니다. 유일한 차이점은 IU
 
 ### **결과분석**
 
-![그림 12: MI-AOD와 다른 방법의 결과 비교 [소스: MI-AOD's 그림 5]](.gitbook/assets/11/performance.png)
+![그림 12: MI-AOD와 다른 방법의 결과 비교 [소스: MI-AOD의 그림 5]](.gitbook/assets/11/performance.png)
 
 전반적으로, 사진을 보시면 MI-AOD가 모든 레이블 설정에서 Object Detection 작업에 다른 모든 Active Learning 기법를 능가한다는 것을 알 수 있습니다. 이는 Instance Uncertainty 학습하는 것이 모델이 유용한 feature와 유익한 훈련 샘플에 집중하는 데 도움이 된다는 것을 증명합니다. 단 다른 논문에 나타나는 Object Detection 모델에 비해 AP가 매우 낮은 줄 알 수도 있는데 그 것은 MI-AOD가 VOC2007과 COCO 데이터 세트의 각각 5%와 2% 레이블링된 데이터로 훈련되었기 때문입니다.
 
@@ -225,13 +224,13 @@ Ablation Study 결과를에 제미있는 점 몇 개가 있습니다. 저는 Abl
 ### **모델 분석**
 1. 비주얼 분석
 
-![그림 13: MI-AOD의 각 단계의 결과의 비주얼 분석 [소스: MI-AOD's 그림 6]](.gitbook/assets/11/visual-analysis.png)
+![그림 13: MI-AOD의 각 단계의 결과의 비주얼 분석 [소스: MI-AOD의 그림 6]](.gitbook/assets/11/visual-analysis.png)
 
 이 그림은 각 단계의 모델 output heatmap를 보여줍니다. 각 Heatmap는 합계된 이미지의 모든 Instance의 Uncertainty 점수입니다. Object of Interest의 주위에 유용한 feature가 많아서 Object에 가까울수록 점수가 더 높습니다.
 
 1. 통계학적 분석
 
-![그림 14: MI-AOD와 다른 방법의 결과의 통계학적 분석 [소스: MI-AOD's 그림 7]](.gitbook/assets/11/stat-analysis.png)
+![그림 14: MI-AOD와 다른 방법의 결과의 통계학적 분석 [소스: MI-AOD의 그림 7]](.gitbook/assets/11/stat-analysis.png)
 
 그림 14는 각 방법의 정확한 Instance의 수를 보여줍니다.
 
