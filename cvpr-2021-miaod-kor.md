@@ -37,9 +37,10 @@ RetinaNet [\[lin2017\]][lin2017] 작동 과정에서 첫 번째 머쥴은 이미
 
 ### **Uncertainty**
 
+![그림 3: 강아지-고양이 classifier의 예시 [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/catdog.png)
+
 1. Uncertainty의 두 가지의 종류.
 
-![그림 3: 강아지-고양이 classifier의 예시 [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/catdog.png)
    
    * 인공지능 모델은 Active Learning하려면 자기가 얼마나 모르는지 항상 궁금해야 됩니다. 하지만 그 것을 그냥 softmax 함수로 측정하면 안 됩니다. 외냐하면 softmax 함수 결과들의 합계는 항상 1이죠.
 
@@ -220,14 +221,12 @@ Ablation Study 결과를에 제미있는 점 몇 개가 있습니다. 저는 Abl
 
 * 표 5는 다른 두 가지 방법과 비교하여 MI-AOD의 훈련 시간을 보여줍니다.
 
+
 ### **모델 분석**
-1. 비주얼 분석
 
 ![그림 13: MI-AOD의 각 단계의 결과의 비주얼 분석 [소스: MI-AOD의 그림 6]](.gitbook/assets/11/visual-analysis.png)
 
 이 그림은 각 단계의 모델 output heatmap를 보여줍니다. 각 Heatmap는 합계된 이미지의 모든 Instance의 Uncertainty 점수입니다. Object of Interest의 주위에 유용한 feature가 많아서 Object에 가까울수록 점수가 더 높습니다.
-
-2. 통계학적 분석
 
 ![그림 14: MI-AOD와 다른 방법의 결과의 통계학적 분석 [소스: MI-AOD의 그림 7]](.gitbook/assets/11/stat-analysis.png)
 
