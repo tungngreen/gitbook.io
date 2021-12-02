@@ -212,9 +212,11 @@ Overall, we can see that MI-AOD outperforms all other Active Learning instances 
 ![](.gitbook/assets/11/table1.png)
 
 There are some interesting things we can point out in the ablation study. I think it is better to look at the data to see how much it supports the authors' arguments in the previous sections.
-* IUL and IUR
-    
+
 ![](.gitbook/assets/11/table2.png)
+
+* IUL and IUR
+
     * Looking at Table 1, for both IUL and IUR, even using random sample selections still improve the performance significantly. If we assume the random unlabeled data added into the labeled set is not very useful and sometimes can be actually harmful to the model, then we can say the model has done a good job filtering out uninformative instances and images.
     * It is quite interesting to see the Mean Uncertainty sample selection outperforms Max Uncertainty as I think it confirms one of the arguments earlier that Instance Uncertainty can be inconsistent with Image Uncertainty. Thus, averaging the uncertainty out help represent the image better.
     * This can be further illustrated in Table 3. Using ![][yhat-i-cls] means we are trying to surpress the classes of objects that are not going to be very useful.
