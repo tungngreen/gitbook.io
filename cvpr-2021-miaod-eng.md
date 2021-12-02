@@ -23,7 +23,7 @@ In Object Detection, our input is usually a picture or a video frame, in which t
 <figure>
     <center>
         <img
-            src=".gitbook/assets/11/object-detection.png"
+            src=".gitbook/assets/11/object-detection.png" width="1000"
         </img>
         </center>
   <center>
