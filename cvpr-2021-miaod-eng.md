@@ -47,15 +47,13 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
 
 1. Two kinds of uncertainty
     
-* Before going further, it is imperative that we clear out another concept. Earlier, we talked about how the images, or bag of instances, that are informative are actually the ones that the model is uncertain about. But how exactly do we do that? It cannot be simply done by measuring the output probabilities of, say, the logistic function, because those probilities will always sum to 1.
+    Before going further, it is imperative that we clear out another concept. Earlier, we talked about how the images, or bag of instances, that are informative are actually the ones that the model is uncertain about. But how exactly do we do that? It cannot be simply done by measuring the output probabilities of, say, the logistic function, because those probilities will always sum to 1.
 
-* For example, if we input a picture of a cat and a dog [\[mitlecture\]][mitlecture] into a model that has been trained with cat and dog pictures, we will probably get 0.51 and 0.49, as the output possibilities. Using that result, the model will still decide and be confident about its decision. But is that correct if we categorize this image into either cat or dog?
+    For example, if we input a picture of a cat and a dog [\[mitlecture\]][mitlecture] into a model that has been trained with cat and dog pictures, we will probably get 0.51 and 0.49, as the output possibilities. Using that result, the model will still decide and be confident about its decision. But is that correct if we categorize this image into either cat or dog?
 
-* To make it even simpler, let's consider a midterm exam consisting of 10 questions, each of which has 4 choices (A, B, C, and D). If you decide to choose only A, you may not choose the right answers for some questions, but at the end of the test you always get 25% of the points. This is refered to as ***Aleatoric Uncertainty*** or the ***uncertainty of data*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty]. 
-
-* However, as you study for the exam, you want to measure your knowledge gap to be filled. One way is to count how many right answers after you have finished 10 questions. Another way, more difficult but also more effective, is to measure how much you are uncertain about each question. This is refered to as ***Epistemic Uncertainty*** or the ***uncertainty of prediction*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty], which is also what we would want to measure so that our model can get better from the questions it is uncertain about.
-
-
+    To make it even simpler, let's consider a midterm exam consisting of 10 questions, each of which has 4 choices (A, B, C, and D). If you decide to choose only A, you may not choose the right answers for some questions, but at the end of the test you always get 25% of the points. This is refered to as ***Aleatoric Uncertainty*** or the ***uncertainty of data*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty]. 
+    
+    However, as you study for the exam, you want to measure your knowledge gap to be filled. One way is to count how many right answers after you have finished 10 questions. Another way, more difficult but also more effective, is to measure how much you are uncertain about each question. This is refered to as ***Epistemic Uncertainty*** or the ***uncertainty of prediction*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty], which is also what we would want to measure so that our model can get better from the questions it is uncertain about.
 
 2. A way to measure Epistemic Uncertainty?
    
