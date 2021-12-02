@@ -20,23 +20,13 @@ But how is that possible for the machine to know the knowledge it lacks, before 
 
 In Object Detection, our input is usually a picture or a video frame, in which there could appear multiple objects of various categories including human, animal and vehicle. The job for our object detection model is to locate and classify the objects by drawing bounding boxes around them and give them the correct label. To predict the bounding boxes that we need to draw, a lot of modern approaches rely on first generating a huge number of anchor boxes. Based on those boxes, the models would start making modifications to them, so at the end we would have accurately drawn bounding boxes. 
 
-![object-detection](.gitbook/assets/11/object-detection.png)
+![Figure 1: An example of Object Detection [source: https://pjreddie.com/darknet/yolo/]](.gitbook/assets/11/object-detection.png)
 
-Figure 1: An example of Object Detection [source: https://pjreddie.com/darknet/yolo/]
 
 
 For RetinaNet [\[lin2017\]][lin2017], the first step would be generating, or proposing, anchor boxes, or in the context of this paper, ***instances***. Since the task is to locate objects, we label the ones that contain only the background ***negative instances*** and the other that contain a part or the whole object ***positive instances***, where we could learn something useful about the objects. And a group of instances is called a ***bag***. In this paper, the authors refer to each image as a instance bag.
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/instance-bag.png"
-        </img>
-        </center>
-  <center>
-    <figcaption>Figure 2: Example of instance bags [source: MI-AOD's Figure 2]</figcaption>
-</center>
-</figure>
+![Figure 2: Example of instance bags [source: MI-AOD's Figure 2]](.gitbook/assets/11/instance-bag.png)
 
 Among the instances, there are informative ones \(colored red\) that would benefit our model the most. Just as a human learner would learn the most from the subjects they do not know, these informative instances are the ones our model is most uncertain about. And the goal of this whole paper is ***to find the most informative bags of instances***.
 
