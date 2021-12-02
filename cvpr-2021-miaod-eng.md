@@ -22,6 +22,7 @@ In Object Detection, our input is usually a picture or a video frame, in which t
 
 ![](.gitbook/assets/11/object-detection.png)
 Figure 1: An example of Object Detection [source: https://pjreddie.com/darknet/yolo/]
+<img src=".gitbook/assets/11/object-detection.png" width="1000">
 
 For RetinaNet [\[lin2017\]][lin2017], the first step would be generating, or proposing, anchor boxes, or in the context of this paper, ***instances***. Since the task is to locate objects, we label the ones that contain only the background ***negative instances*** and the other that contain a part or the whole object ***positive instances***, where we could learn something useful about the objects. And a group of instances is called a ***bag***. In this paper, the authors refer to each image as a instance bag.
 
