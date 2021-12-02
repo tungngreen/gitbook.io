@@ -38,10 +38,10 @@ RetinaNet [\[lin2017\]][lin2017] 작동 과정에서 첫 번째 머쥴은 이미
 ### **Uncertainty**
 
 1. Uncertainty의 두 가지의 종류.
-   
-    * 인공지능 모델은 Active Learning하려면 자기가 얼마나 모르는지 항상 궁금해야 됩니다. 하지만 그 것을 그냥 softmax 함수로 측정하면 안 됩니다. 외냐하면 softmax 함수 결과들의 합계는 항상 1이죠.
 
 ![그림 3: 강아지-고양이 classifier의 예시 [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/catdog.png)
+   
+   * 인공지능 모델은 Active Learning하려면 자기가 얼마나 모르는지 항상 궁금해야 됩니다. 하지만 그 것을 그냥 softmax 함수로 측정하면 안 됩니다. 외냐하면 softmax 함수 결과들의 합계는 항상 1이죠.
 
    * 예를 들어 강아지 이미지와 고양이 이미지만으로 훈련 된 위에 있는 모델에 강아지와 고양이 둘 다 있는 이미지가 들어가면 나오는 확률은 고양이 0.5, 강아지 0.5겠죠. 그 다음에 모델은 고양이와 강아지 중에 하나를 선택합니다. 하지만 그 것은 맞습니까? 아니죠?
   
@@ -51,22 +51,21 @@ RetinaNet [\[lin2017\]][lin2017] 작동 과정에서 첫 번째 머쥴은 이미
 
 2.  Epistemic Uncertainty를 측정하는 법
 
-    * Test 때의 dropout
+![그림 4: Uncertainty 측정을 위한 Dropout  [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
 
-      * 보통 Dropout라는 기법은 regularization을 위해서 훈련 때만 쓰이지만 test 때 stochastic sampling 목적으로 쓰여도 됩니다.
+   * Test 때의 dropout
 
-    ![그림 4: Uncertainty 측정을 위한 Dropout  [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
+     * 보통 Dropout라는 기법은 regularization을 위해서 훈련 때만 쓰이지만 test 때 stochastic sampling 목적으로 쓰여도 됩니다.
 
-    * Model Ensemble
+   * Model Ensemble
     
-       * 독같은 모델와 독같은 데이터이라도 훈련 후 나오는 결과들의 사이에 차이가 생길 수도 있습니다. 따라서 독립하게 훈련 된 모델들을 모아서 같은 test sample에 쓰는 것은 결과의 배포을 측정하기 위한 sampling으로 보일  수 있습니다.
+     * 독같은 모델와 독같은 데이터이라도 훈련 후 나오는 결과들의 사이에 차이가 생길 수도 있습니다. 따라서 독립하게 훈련 된 모델들을 모아서 같은 test sample에 쓰는 것은 결과의 배포을 측정하기 위한 sampling으로 보일  수 있습니다.
+  
+![그림 5: Uncertainty 측정을 위한 Model Ensembling [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
 
-    ![그림 5: Uncertainty 측정을 위한 Model Ensembling [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
+   * 마지막에 수많은 수집된 sample 결과들로 모델 output의 기대값 (Expected Value)와 분산값 (Variance)을 계산할 수 있습니다. Variance 값이 클수록 Uncertainty 도가 더 큽니다.
 
-    * 마지막에 수많은 수집된 sample 결과들로 모델 output의 기대값 (Expected Value)와 분산값 (Variance)을 계산할 수 있습니다. Variance 값이 클수록 Uncertainty 도가 더 큽니다.
-
-
-![Figure 6: Model weights' distribution [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance.png)
+![Figure 6: 모델의 웨이트 분포 [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance.png)
 
 ![그림 7: 모델의 예측 결과의 기대값과 분산값 측정 [소스: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance2.png)
 
@@ -349,49 +348,49 @@ A. Amini, “MIT 6.S191: Evidential Deep Learning and Uncertainty.” https://ww
 [liu2016]: https://link.springer.com/chapter/10.1007/978-3-319-46448-0_2
 
 
-[iur]: /.gitbook/assets/11/iur.png
+[iur]: .gitbook/assets/11/iur.png
 
 
-[g]: /.gitbook/assets/11/equations/g.png
-[i]: /.gitbook/assets/11/equations/i.png
-[yhat-f1]: /.gitbook/assets/11/equations/yhat-f1.png
-[yhat-f2]: /.gitbook/assets/11/equations/yhat-f2.png
-[yhat-fr]: /.gitbook/assets/11/equations/yhat-fr.png
-[equation1]:/.gitbook/assets/11/equations/equation1.png
-[equation2]:/.gitbook/assets/11/equations/equation2.png
-[equation3]:/.gitbook/assets/11/equations/equation3.png
-[equation4]: /.gitbook/assets/11/equations/equation4.png
-[equation5]: /.gitbook/assets/11/equations/equation5.png
-[equation6]: /.gitbook/assets/11/equations/equation6.png
-[equation7]: /.gitbook/assets/11/equations/equation7.png
-[equation8]: /.gitbook/assets/11/equations/equation8.png
-[equation9]: /.gitbook/assets/11/equations/equation9.png
-[equation10]: /.gitbook/assets/11/equations/equation10.png
-[theta-g]: /.gitbook/assets/11/equations/theta-g.png
-[f1]: /.gitbook/assets/11/equations/f1.png
-[f2]: /.gitbook/assets/11/equations/f2.png
-[fr]: /.gitbook/assets/11/equations/fr.png
-[theta-set]: /.gitbook/assets/11/equations/theta-set.png
-[theta-f1]: /.gitbook/assets/11/equations/theta-f1.png
-[theta-f2]: /.gitbook/assets/11/equations/theta-f2.png
-[yhat-ic]: /.gitbook/assets/11/equations/yhat-ic.png
-[f-mil]: /.gitbook/assets/11/equations/f-mil.png
-[x-0-u]: /.gitbook/assets/11/equations/x-u-0.png
-[x-0-l]: /.gitbook/assets/11/equations/x-0-l.png
-[x-y-0-l]: /.gitbook/assets/11/equations/x-y-0-l.png
-[x-in-x-0-l]: /.gitbook/assets/11/equations/x-in-x-0-l.png
-[x-in-x-0-u]: /.gitbook/assets/11/equations/x-in-x-0-u.png
-[x-set]: /.gitbook/assets/11/equations/x-set.png
-[y-loc-x]: /.gitbook/assets/11/equations/y-loc-x.png
-[y-cls-x]: /.gitbook/assets/11/equations/y-cls-x.png
-[y-0-l]: /.gitbook/assets/11/equations/y-0-l.png
-[k]: /.gitbook/assets/11/equations/k.png
-[lambda]: /.gitbook/assets/11/equations/lambda.png
+[g]: .gitbook/assets/11/equations/g.png
+[i]: .gitbook/assets/11/equations/i.png
+[yhat-f1]: .gitbook/assets/11/equations/yhat-f1.png
+[yhat-f2]: .gitbook/assets/11/equations/yhat-f2.png
+[yhat-fr]: .gitbook/assets/11/equations/yhat-fr.png
+[equation1]:.gitbook/assets/11/equations/equation1.png
+[equation2]:.gitbook/assets/11/equations/equation2.png
+[equation3]:.gitbook/assets/11/equations/equation3.png
+[equation4]: .gitbook/assets/11/equations/equation4.png
+[equation5]: .gitbook/assets/11/equations/equation5.png
+[equation6]: .gitbook/assets/11/equations/equation6.png
+[equation7]: .gitbook/assets/11/equations/equation7.png
+[equation8]: .gitbook/assets/11/equations/equation8.png
+[equation9]: .gitbook/assets/11/equations/equation9.png
+[equation10]: .gitbook/assets/11/equations/equation10.png
+[theta-g]: .gitbook/assets/11/equations/theta-g.png
+[f1]: .gitbook/assets/11/equations/f1.png
+[f2]: .gitbook/assets/11/equations/f2.png
+[fr]: .gitbook/assets/11/equations/fr.png
+[theta-set]: .gitbook/assets/11/equations/theta-set.png
+[theta-f1]: .gitbook/assets/11/equations/theta-f1.png
+[theta-f2]: .gitbook/assets/11/equations/theta-f2.png
+[yhat-ic]: .gitbook/assets/11/equations/yhat-ic.png
+[f-mil]: .gitbook/assets/11/equations/f-mil.png
+[x-0-u]: .gitbook/assets/11/equations/x-u-0.png
+[x-0-l]: .gitbook/assets/11/equations/x-0-l.png
+[x-y-0-l]: .gitbook/assets/11/equations/x-y-0-l.png
+[x-in-x-0-l]: .gitbook/assets/11/equations/x-in-x-0-l.png
+[x-in-x-0-u]: .gitbook/assets/11/equations/x-in-x-0-u.png
+[x-set]: .gitbook/assets/11/equations/x-set.png
+[y-loc-x]: .gitbook/assets/11/equations/y-loc-x.png
+[y-cls-x]: .gitbook/assets/11/equations/y-cls-x.png
+[y-0-l]: .gitbook/assets/11/equations/y-0-l.png
+[k]: .gitbook/assets/11/equations/k.png
+[lambda]: .gitbook/assets/11/equations/lambda.png
 
-[yhat-i-cls]: /.gitbook/assets/11/equations/yhat-i-cls.png
-[tilde-l-dis]: /.gitbook/assets/11/equations/tilde-l-dis.png
-[table1]: /.gitbook/assets/11/table1.png
-[table2]: /.gitbook/assets/11/table2.png
-[table3]: /.gitbook/assets/11/table3.png
-[table4]: /.gitbook/assets/11/table4.png
-[table5]: /.gitbook/assets/11/table5.png
+[yhat-i-cls]: .gitbook/assets/11/equations/yhat-i-cls.png
+[tilde-l-dis]: .gitbook/assets/11/equations/tilde-l-dis.png
+[table1]: .gitbook/assets/11/table1.png
+[table2]: .gitbook/assets/11/table2.png
+[table3]: .gitbook/assets/11/table3.png
+[table4]: .gitbook/assets/11/table4.png
+[table5]: .gitbook/assets/11/table5.png
