@@ -45,64 +45,28 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
 1. Two kinds of uncertainty
       * Before going further, it is imperative that we clear out another concept. Earlier, we talked about how the images, or bag of instances, that are informative are actually the ones that the model is uncertain about. But how exactly do we do that? It cannot be simply done by measuring the output probabilities of, say, the logistic function, because those probilities will always sum to 1.
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/catdog.png"
-        </img>
-        </center>
-    <center>
-        <figcaption>Figure 3: A cat-dog classifier [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]</figcaption>
-    </center>
-</figure>
+    ![Figure 3: A cat-dog classifier [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/catdog.png)
 
    * For example, if we input a picture of a cat and a dog [\[mitlecture\]][mitlecture] into a model that has been trained with cat and dog pictures, we will probably get 0.51 and 0.49, as the output possibilities. Using that result, the model will still decide and be confident about its decision. But is that correct if we categorize this image into either cat or dog?
   
    * To make it even simpler, let's consider a midterm exam consisting of 10 questions, each of which has 4 choices (A, B, C, and D). If you decide to choose only A, you may not choose the right answers for some questions, but at the end of the test you always get 25% of the points. This is refered to as ***Aleatoric Uncertainty*** or the ***uncertainty of data*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty]. 
 
    * However, as you study for the exam, you want to measure your knowledge gap to be filled. One way is to count how many right answers after you have finished 10 questions. Another way, more difficult but also more effective, is to measure how much you are uncertain about each question. This is refered to as ***Epistemic Uncertainty*** or the ***uncertainty of prediction*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty], which is also what we would want to measure so that our model can get better from the questions it is uncertain about.
-2. A way to measure Epistemic Uncertainty?
+1. A way to measure Epistemic Uncertainty?
    * Dropout at test time
      * Usually, we would only use dropout for the train phase, but here we can use it as a form of stochastic sampling.
-      
-        <figure>
-            <center>
-                <img
-                    src=".gitbook/assets/11/dropout.png"
-                </img>
-                </center>
-            <center>
-                <figcaption>Figure 4: Dropout Sampling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]</figcaption>
-            </center>
-        </figure>
+    
+    ![Figure 4: Dropout Sampling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
 
      * For each dropout case, we would likely have a different output.
    * Model Emsemble
      * In this case, we use model independently trained for sampling.
-  
-        <figure>
-            <center>
-                <img
-                    src=".gitbook/assets/11/model-ensemble.png"
-                </img>
-                </center>
-            <center>
-                <figcaption>Figure 5: Model Ensembling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s] </figcaption>
-            </center>
-        </figure>
+    
+    ![Figure 5: Model Ensembling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
 
    * At the end, by looking at many sample outputs for the same input, we can calculate the expectation and variance of the model's prediction. The larger the variance is, the more uncertain the model is.
     
-        <figure>
-            <center>
-                <img
-                    src=".gitbook/assets/11/variance.png"
-                </img>
-                </center>
-            <center>
-                <figcaption>Figure 6: Model weights' distribution [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]</figcaption>
-            </center>
-        </figure>
+        ![Figure 6: Model weights' distribution [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance.png)
 ### **Related Work**
 1. Uncertainty-based Active Learning
     
@@ -119,16 +83,7 @@ In this paper, the authors proposed a Multiple Instance Active Object Detection 
   
 Let's discuss them one by one.
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/variance2.png"
-        </img>
-        </center>
-    <center>
-        <figcaption>Figure 7: Calculating Expectation and Variance for a model's output [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s] </figcaption>
-    </center>
-</figure>
+![Figure 7: Calculating Expectation and Variance for a model's output [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance2.png)
 
 In Section 1, we saw that a simple way to measure the model's uncertainty is that for each input image, we sample a lot of not only outputs but also the network weights through either dropout or model ensemble. However, it is prohibitively expensive to do so. For example, a regular medium-sized model nowadays can take up to a few GB in the GPU. If we are to sample enough samples, say a few thousands, can you imagine the number of GPUs we need!
 
@@ -136,29 +91,11 @@ So, instead of doing the unthinkable, the authors employ another method. To perf
 
 Looking at the figure, you may be quite confused now, rightfully as I was when I first saw it. Maximizing Instance Uncertainty and then Minimizing it? Actually, this is two slightly different training processes. The first one, as we have discussed earlier, focuses on maximizing the discrepancy between two classifiers. But once f1 and f2 have learned to make wildly different predictions, we can use them to reduce the bias discrepancy between the labeled and unlabeled sets.
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/iul.png"
-        </img>
-        </center>
-    <center>
-        <figcaption>Figure 8: Multiple Instance Uncertainty Learning [source: MI-AOD's Figure 2]</figcaption>
-    </center>
-</figure>
+![Figure 8: Multiple Instance Uncertainty Learning [source: MI-AOD's Figure 2]](.gitbook/assets/11/iul.png)
 
 Now, we have been able to measure the instance uncertainty of the model, we should be able to pick informative images? No, at least not yet. Imagine we are training to better recognize dogs and we have two pictures, one full of dogs and the other has only one dog among many other more representative objects. Assuming, the model show the same level of uncertainty for both pictures, both pictures can be labeled 'dog', since there are dogs in both of them. However, it is glaringly obvious that the one filled with dogs would be more useful to our model. Here, we have to distinguish between instance uncertainty and image label uncertainty. MI-AOD uses a Multiple instance learning (MIL) module to perform instance uncertainty reweighting (IUR), forcing appearance consistency across images. Only then can we find the informative images within the unlabeled dataset.
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/iur.png"
-        </img>
-        </center>
-    <center>
-        <figcaption>Figure 9: Multiple Instance Uncertainty Reweighting [source: MI-AOD's Figure 2]</figcaption>
-    </center>
-</figure>
+![Figure 9: Multiple Instance Uncertainty Reweighting [source: MI-AOD's Figure 2]](.gitbook/assets/11/iur.png)
 
 The training procedures of IUL and IUR are nearly identical. The only difference is that IUR tries to achieve the consistency between instance label and image label. We would see how both are designed in detail in the next section.
 
@@ -173,17 +110,8 @@ Before we dive into the details, let's take a quick overview look at the trainin
 ### ***Instace Uncertainty Learning (IUL)***
 
 1. Label Set Training
-   
-    <figure>
-        <center>
-            <img
-                src=".gitbook/assets/11/iul-training.png"
-            </img>
-            </center>
-        <center>
-            <figcaption>Figure 10: IUL training process [source: MI-AOD's Figure 3]</figcaption>
-        </center>
-    </figure>
+    
+    ![Figure 10: IUL training process [source: MI-AOD's Figure 3]](.gitbook/assets/11/iul-training.png)
 
     Looking at part (a) of the figure, we can see 4 components. ![][g] is the base network, RetinaNet [\[lin2017\]][lin2017], in charge of extracting the features, and ![][theta-g] is the set of parameters of ![][g]. As mentioned earlier, we have two classifier heads, ![][f1] and ![][f2], stacked on top of the network ![][g]. Moreover, regressor ![][fr] is in charge of learning the bounding boxes. ![][theta-set] denotes the set of all parameters, in which ![][theta-f1] and ![][theta-f2] are independently initialized as they are supposed to be trained adversarially. We have the detection loss for each image:
 
@@ -218,16 +146,7 @@ Before we dive into the details, let's take a quick overview look at the trainin
 
 RetinaNet generates roughly 100k instances per image, some of which simply contain background noise. Therefore, in this phase, to improve the efficiency of the model, we need to make sure that instance uncertainty is aligned with image uncertainty.
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/iur-training.png"
-        </img>
-        </center>
-    <center>
-        <figcaption>Figure 11: IUR training process [source: MI-AOD's Figure 4]</figcaption>
-    </center>
-</figure>
+![Figure 11: IUR training process [source: MI-AOD's Figure 4]](.gitbook/assets/11/iur-training.png)
 
 1. Multiple Instance Learning (MIL)
     
@@ -260,10 +179,6 @@ RetinaNet generates roughly 100k instances per image, some of which simply conta
 
     ![][equation9] (9)
 
-
-
-    
-
 ## **4. Experiment and Result**
 
 ### **Experimental Setup**
@@ -287,36 +202,14 @@ RetinaNet generates roughly 100k instances per image, some of which simply conta
 
 ### **Performance**
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/performance.png"
-        </img>
-        </center>
-    <center>
-        <figcaption>Figure 12: Performance of MI-AOD compared to other methods [source: MI-AOD's Figure 5]</figcaption>
-    </center>
-</figure> 
+![Figure 12: Performance of MI-AOD compared to other methods [source: MI-AOD's Figure 5]](.gitbook/assets/11/performance.png)
 
 Overall, we can see that MI-AOD outperforms all other Active Learning instances for the task of Object Detection, for all the label portion settings. This proves that learning from instance uncertainty helps the model focus on the useful feature instances and informative training samples. You may see the APs are very low compared to other Object Detection models these days. But keep in mind that in this paper, the model was initially trained with only 5% and 2% labeled data for VOC2007 and COCO respectively. The rest was unlabeled and the model itself had to label it and integrate the informative samples into the training data. So, this is a very decent result.
 
 ### **Ablation Study**
 
-<figure>
-    <center>
-        <img
-            <img src=".gitbook/assets/11/table1.png" width="900">
-        </img>
-        </center>
-</figure> 
-
-<figure>
-    <center>
-        <img
-            <img src=".gitbook/assets/11/table2.png" width="400">
-        </img>
-        </center>
-</figure> 
+![](.gitbook/assets/11/table1.png)
+![](.gitbook/assets/11/table2.png)
 
 There are some interesting things we can point out in the ablation study. I think it is better to look at the data to see how much it supports the authors' arguments in the previous sections.
 * IUL and IUR
@@ -324,14 +217,7 @@ There are some interesting things we can point out in the ablation study. I thin
     * It is quite interesting to see the Mean Uncertainty sample selection outperforms Max Uncertainty as I think it confirms one of the arguments earlier that Instance Uncertainty can be inconsistent with Image Uncertainty. Thus, averaging the uncertainty out help represent the image better.
     * This can be further illustrated in Table 3. Using ![][yhat-i-cls] means we are trying to surpress the classes of objects that are not going to be very useful.
 
-
-<figure>
-    <center>
-        <img
-            <img src=".gitbook/assets/11/table4.png" width="450">
-        </img>
-        </center>
-</figure> 
+        ![](.gitbook/assets/11/table4.png)
 
 * Hyper-parameters
 
@@ -339,13 +225,8 @@ There are some interesting things we can point out in the ablation study. I thin
     * From equations (2), (4), (8), and (9), if ![][lambda] is too low, the uncertainty learning on unlabeled set has little impact.
     * If we increase ![][lambda], we either encourage or discourage instance uncertainty, depending on which stage. That could be the reason a neutral value, 0.5, works best. It would be interesting to see the performance if we use two ![][lambda] values for two stages.
 
-<figure>
-    <center>
-        <img
-            <img src=".gitbook/assets/11/table5.png" width="400">
-        </img>
-        </center>
-</figure> 
+        ![](.gitbook/assets/11/table5.png)
+
 *  Table 5 shows the training time of MI-AOD compared to two other methods.
 
 
@@ -355,31 +236,13 @@ There are some interesting things we can point out in the ablation study. I thin
 ### **Model Analysis**
 1. Visual Analysis
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/visual-analysis.png"
-        </img>
-        </center>
-    <center>
-        <figcaption>Figure 13: Visual Analysis of MI-AOD's performance at different stages [source: MI-AOD's Figure 6]</figcaption>
-    </center>
-</figure> 
+![Figure 13: Visual Analysis of MI-AOD's performance at different stages [source: MI-AOD's Figure 6]](.gitbook/assets/11/visual-analysis.png)
 
 Figure 13 shows the heat map of model's output after each stage. It is calculated by summarizing the uncertainty score of all instances. The high uncertainty score should be focused around the objects of interest, because the closer all the uncertain instances are to the objects, the more useful features we could learn. We can see that by applying different stages, the uncertain region slowly closed down on the objects.
 
-2. Statistical Analysis
+1. Statistical Analysis
 
-<figure>
-    <center>
-        <img
-            src=".gitbook/assets/11/stat-analysis.png"
-        </img>
-        </center>
-    <center>
-        <figcaption>Figure 14: Statistical Analysis of MI-AOD's performance compared to other methods [source: MI-AOD's Figure 7]</figcaption>
-    </center>
-</figure> 
+![Figure 14: Statistical Analysis of MI-AOD's performance compared to other methods [source: MI-AOD's Figure 7]](.gitbook/assets/11/stat-analysis.png)
 
 Figure 14 shows the number of true positive instances hit by each methods.
 
