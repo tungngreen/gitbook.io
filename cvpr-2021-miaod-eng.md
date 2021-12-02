@@ -43,7 +43,8 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
 ### **Uncertainty**
 
 1. Two kinds of uncertainty
-      * Before going further, it is imperative that we clear out another concept. Earlier, we talked about how the images, or bag of instances, that are informative are actually the ones that the model is uncertain about. But how exactly do we do that? It cannot be simply done by measuring the output probabilities of, say, the logistic function, because those probilities will always sum to 1.
+    
+    * Before going further, it is imperative that we clear out another concept. Earlier, we talked about how the images, or bag of instances, that are informative are actually the ones that the model is uncertain about. But how exactly do we do that? It cannot be simply done by measuring the output probabilities of, say, the logistic function, because those probilities will always sum to 1.
 
 ![Figure 3: A cat-dog classifier [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/catdog.png)
 
@@ -52,7 +53,8 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
    * To make it even simpler, let's consider a midterm exam consisting of 10 questions, each of which has 4 choices (A, B, C, and D). If you decide to choose only A, you may not choose the right answers for some questions, but at the end of the test you always get 25% of the points. This is refered to as ***Aleatoric Uncertainty*** or the ***uncertainty of data*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty]. 
 
    * However, as you study for the exam, you want to measure your knowledge gap to be filled. One way is to count how many right answers after you have finished 10 questions. Another way, more difficult but also more effective, is to measure how much you are uncertain about each question. This is refered to as ***Epistemic Uncertainty*** or the ***uncertainty of prediction*** [\[ulkumen-uncertainty\]][ulkumen-uncertainty], which is also what we would want to measure so that our model can get better from the questions it is uncertain about.
-1. A way to measure Epistemic Uncertainty?
+  
+2. A way to measure Epistemic Uncertainty?
    * Dropout at test time
      * Usually, we would only use dropout for the train phase, but here we can use it as a form of stochastic sampling.
      * For each dropout case, we would likely have a different output.
@@ -67,6 +69,8 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
    * At the end, by looking at many sample outputs for the same input, we can calculate the expectation and variance of the model's prediction. The larger the variance is, the more uncertain the model is.
     
 ![Figure 6: Model weights' distribution [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance.png)
+
+![Figure 7: Calculating Expectation and Variance for a model's output [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance2.png)
 
 ### **Related Work**
 1. Uncertainty-based Active Learning
@@ -83,8 +87,6 @@ In this paper, the authors proposed a Multiple Instance Active Object Detection 
 * Give that image a label.
   
 Let's discuss them one by one.
-
-![Figure 7: Calculating Expectation and Variance for a model's output [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance2.png)
 
 In Section 1, we saw that a simple way to measure the model's uncertainty is that for each input image, we sample a lot of not only outputs but also the network weights through either dropout or model ensemble. However, it is prohibitively expensive to do so. For example, a regular medium-sized model nowadays can take up to a few GB in the GPU. If we are to sample enough samples, say a few thousands, can you imagine the number of GPUs we need!
 
