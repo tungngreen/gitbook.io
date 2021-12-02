@@ -56,17 +56,18 @@ In this paper, the model *M* is first trained on the labeled data ![][x-y-0-l], 
    * Dropout at test time
      * Usually, we would only use dropout for the train phase, but here we can use it as a form of stochastic sampling.
     
-    ![Figure 4: Dropout Sampling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
+![Figure 4: Dropout Sampling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/dropout.png)
 
      * For each dropout case, we would likely have a different output.
    * Model Emsemble
      * In this case, we use model independently trained for sampling.
     
-    ![Figure 5: Model Ensembling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
+![Figure 5: Model Ensembling to measure uncertainty [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/model-ensemble.png)
 
    * At the end, by looking at many sample outputs for the same input, we can calculate the expectation and variance of the model's prediction. The larger the variance is, the more uncertain the model is.
     
-        ![Figure 6: Model weights' distribution [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance.png)
+![Figure 6: Model weights' distribution [source: https://www.youtube.com/watch?v=toTcf7tZK8c&t=2061s]](.gitbook/assets/11/variance.png)
+
 ### **Related Work**
 1. Uncertainty-based Active Learning
     
@@ -109,20 +110,20 @@ Before we dive into the details, let's take a quick overview look at the trainin
 
 ### ***Instace Uncertainty Learning (IUL)***
 
+![Figure 10: IUL training process [source: MI-AOD's Figure 3]](.gitbook/assets/11/iul-training.png)
+
 1. Label Set Training
-    
-    ![Figure 10: IUL training process [source: MI-AOD's Figure 3]](.gitbook/assets/11/iul-training.png)
 
     Looking at part (a) of the figure, we can see 4 components. ![][g] is the base network, RetinaNet [\[lin2017\]][lin2017], in charge of extracting the features, and ![][theta-g] is the set of parameters of ![][g]. As mentioned earlier, we have two classifier heads, ![][f1] and ![][f2], stacked on top of the network ![][g]. Moreover, regressor ![][fr] is in charge of learning the bounding boxes. ![][theta-set] denotes the set of all parameters, in which ![][theta-f1] and ![][theta-f2] are independently initialized as they are supposed to be trained adversarially. We have the detection loss for each image:
 
     ![][equation1] (1),
 
     Where:
-      * FL(.) is the focal loss proposed in RetinaNet [\[lin2017\]][lin2017].
-      * ![][i] is the instance number.
-      * ![][yhat-f1],![][yhat-f2], and ![][yhat-fr] are the prediction of each classifier for instance number ![][i]
+        * FL(.) is the focal loss proposed in RetinaNet [\[lin2017\]][lin2017].
+        * ![][i] is the instance number.
+        * ![][yhat-f1],![][yhat-f2], and ![][yhat-fr] are the prediction of each classifier for instance number ![][i]
 
-    At this stage, the training is only done on the labeled set. The objective is to get the model familiarzed with the labeled training data so it can later generalize on the unlabeled set. Since ![][f1] and ![][f2] were initialized independently, we could see some discrepancy in their predictions. However, this is not the objective at this stage.
+    At this stage, the training is only done on the labeled set. The objective is to get the model familiarzed with the labeled training data so it can later generalize on the unlabeled set. Since ![][f1] and ![][f2] were initialized independently, we could see some discrepancy in their predictions. However, this is not the objective a`t this stage.
 
 2.  Maximizing Instance Uncertainty
    
@@ -209,15 +210,15 @@ Overall, we can see that MI-AOD outperforms all other Active Learning instances 
 ### **Ablation Study**
 
 ![](.gitbook/assets/11/table1.png)
-![](.gitbook/assets/11/table2.png)
 
 There are some interesting things we can point out in the ablation study. I think it is better to look at the data to see how much it supports the authors' arguments in the previous sections.
 * IUL and IUR
+    ![](.gitbook/assets/11/table2.png)
     * Looking at Table 1, for both IUL and IUR, even using random sample selections still improve the performance significantly. If we assume the random unlabeled data added into the labeled set is not very useful and sometimes can be actually harmful to the model, then we can say the model has done a good job filtering out uninformative instances and images.
     * It is quite interesting to see the Mean Uncertainty sample selection outperforms Max Uncertainty as I think it confirms one of the arguments earlier that Instance Uncertainty can be inconsistent with Image Uncertainty. Thus, averaging the uncertainty out help represent the image better.
     * This can be further illustrated in Table 3. Using ![][yhat-i-cls] means we are trying to surpress the classes of objects that are not going to be very useful.
 
-        ![](.gitbook/assets/11/table4.png)
+    ![](.gitbook/assets/11/table4.png)
 
 * Hyper-parameters
 
@@ -225,7 +226,7 @@ There are some interesting things we can point out in the ablation study. I thin
     * From equations (2), (4), (8), and (9), if ![][lambda] is too low, the uncertainty learning on unlabeled set has little impact.
     * If we increase ![][lambda], we either encourage or discourage instance uncertainty, depending on which stage. That could be the reason a neutral value, 0.5, works best. It would be interesting to see the performance if we use two ![][lambda] values for two stages.
 
-        ![](.gitbook/assets/11/table5.png)
+    ![](.gitbook/assets/11/table5.png)
 
 *  Table 5 shows the training time of MI-AOD compared to two other methods.
 
