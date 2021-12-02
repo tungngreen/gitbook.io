@@ -232,9 +232,9 @@ Ablation Study 결과를에 제미있는 점 몇 개가 있습니다. 저는 Abl
 
 2. 통계적 분석
 
-    ![그림 14: MI-AOD와 다른 방법의 결과의 통계학적 분석 [소스: MI-AOD의 그림 7]](.gitbook/assets/11/stat-analysis.png)
+   그림 14는 각 방법의 정확한 Instance의 수를 보여줍니다.
 
-    그림 14는 각 방법의 정확한 Instance의 수를 보여줍니다.
+![그림 14: MI-AOD와 다른 방법의 결과의 통계학적 분석 [소스: MI-AOD의 그림 7]](.gitbook/assets/11/stat-analysis.png)
 
 ## **5. 결론**
 

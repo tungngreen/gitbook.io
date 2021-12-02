@@ -244,17 +244,18 @@ There are some interesting things we can point out in the ablation study. I thin
    [lambda]: .gitbook/assets/11/equations/lambda.png
 
 ### **Model Analysis**
-1. Visual Analysis
 
-    ![Figure 13: Visual Analysis of MI-AOD's performance at different stages [source: MI-AOD's Figure 6]](.gitbook/assets/11/visual-analysis.png)
+![Figure 13: Visual Analysis of MI-AOD's performance at different stages [source: MI-AOD's Figure 6]](.gitbook/assets/11/visual-analysis.png)
+
+1. Visual Analysis
 
     Figure 13 shows the heat map of model's output after each stage. It is calculated by summarizing the uncertainty score of all instances. The high uncertainty score should be focused around the objects of interest, because the closer all the uncertain instances are to the objects, the more useful features we could learn. We can see that by applying different stages, the uncertain region slowly closed down on the objects.
 
 2. Statistical Analysis
 
-    ![Figure 14: Statistical Analysis of MI-AOD's performance compared to other methods [source: MI-AOD's Figure 7]](.gitbook/assets/11/stat-analysis.png)
-
     Figure 14 shows the number of true positive instances hit by each methods.
+
+![Figure 14: Statistical Analysis of MI-AOD's performance compared to other methods [source: MI-AOD's Figure 7]](.gitbook/assets/11/stat-analysis.png)
 
 ## 5. Conclusion
 
