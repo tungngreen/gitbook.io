@@ -20,9 +20,10 @@ But how is that possible for the machine to know the knowledge it lacks, before 
 
 In Object Detection, our input is usually a picture or a video frame, in which there could appear multiple objects of various categories including human, animal and vehicle. The job for our object detection model is to locate and classify the objects by drawing bounding boxes around them and give them the correct label. To predict the bounding boxes that we need to draw, a lot of modern approaches rely on first generating a huge number of anchor boxes. Based on those boxes, the models would start making modifications to them, so at the end we would have accurately drawn bounding boxes. 
 
-![](.gitbook/assets/11/object-detection.png)
+![object-detection](.gitbook/assets/11/object-detection.png)
+
 Figure 1: An example of Object Detection [source: https://pjreddie.com/darknet/yolo/]
-<img src=".gitbook/assets/11/object-detection.png" width="10000"/>
+
 
 For RetinaNet [\[lin2017\]][lin2017], the first step would be generating, or proposing, anchor boxes, or in the context of this paper, ***instances***. Since the task is to locate objects, we label the ones that contain only the background ***negative instances*** and the other that contain a part or the whole object ***positive instances***, where we could learn something useful about the objects. And a group of instances is called a ***bag***. In this paper, the authors refer to each image as a instance bag.
 
